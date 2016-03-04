@@ -1,76 +1,47 @@
 # BOSH Release for cron
 
-## Usage
+This BOSH release is intended to allow you to add generic crontab entries
+to any existing BOSH deployment by colocating the `cron` job alongside your
+VMs.
 
-To use this bosh release, first upload it to your bosh:
+Additionally, it serves as a good starting point, should you want to `bosh-gen extract-job`
+into your own BOSH release, to make it easier to tie a cronjob to your specific release.
 
-```
-bosh target BOSH_HOST
-git clone https://github.com/cloudfoundry-community/cron-boshrelease.git
-cd cron-boshrelease
-bosh upload release releases/cron-1.yml
-```
 
-For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster:
+### Colocation Instructions
 
-```
-templates/make_manifest warden
-bosh -n deploy
-```
-
-For AWS EC2, create a single VM:
+To colocate, ensure your job has the `cron` template specified:
 
 ```
-templates/make_manifest aws-ec2
-bosh -n deploy
+jobs:
+- name: myjob
+  templates:
+  - name: cron
+    release: cron
 ```
 
-### Override security groups
-
-For AWS & Openstack, the default deployment assumes there is a `default` security group. If you wish to use a different security group(s) then you can pass in additional configuration when running `make_manifest` above.
-
-Create a file `my-networking.yml`:
-
-``` yaml
----
-networks:
-  - name: cron1
-    type: dynamic
-    cloud_properties:
-      security_groups:
-        - cron
-```
-
-Where `- cron` means you wish to use an existing security group called `cron`.
-
-You now suffix this file path to the `make_manifest` command:
+For configuring cron entries, use the following properties:
 
 ```
-templates/make_manifest openstack-nova my-networking.yml
-bosh -n deploy
+properties:
+  cron:
+    variables: # a key-value map of any environment variables you want set in the crontab
+      VAR1: val1
+      VAR2: val2
+    entries: # a list of key-value objects representing cron entries
+    - command: echo hi!
+      minute: '*'
+      hour: '*'
+      day: '*'
+      month: '*'
+      wday: '*'
 ```
 
-### Development
+When deployed, this release will generate a crontab, stick it in /etc/cron.d/cron-boshrelease-crontab, and reload the running cron process to read the new crontab.
 
-As a developer of this release, create new releases and upload them:
+### Extraction
 
-```
-bosh create release --force && bosh -n upload release
-```
-
-### Final releases
-
-To share final releases:
-
-```
-bosh create release --final
-```
-
-By default the version number will be bumped to the next major number. You can specify alternate versions:
-
-
-```
-bosh create release --final --version 2.1
-```
-
-After the first release you need to contact [Dmitriy Kalinin](mailto://dkalinin@pivotal.io) to request your project is added to https://bosh.io/releases (as mentioned in README above).
+Feel free to use bosh-gen to extract the `cron` job into your BOSH release, and provide
+custom crontabs that you want always present. Just make sure you modify the filename
+being used to install the crontab, so it won't conflict if a user colocates this
+BOSH release on top of yours!
