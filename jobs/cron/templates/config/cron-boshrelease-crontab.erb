@@ -5,6 +5,6 @@
 <% end %>
 <% if_p("cron.entries") do |entries| %>
 <% entries.each do |entry| %>
-<%= entry["minute"] %> <%= entry["hour"] %> <%= entry["day"] %> <%= entry["month"] %> <%= entry["wday"] %> <%= entry["user"] %> <%= entry["command"] %>
+<%= entry["minute"] %> <%= entry["hour"] %> <%= entry["day"] %> <%= entry["month"] %> <%= entry["wday"] %> <%= entry["user"] %> <%= entry["command"].gsub(/([^\\])%/, '\1\%') %>
 <% end %>
 <% end %>
