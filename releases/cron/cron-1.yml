@@ -1,0 +1,15 @@
+---
+packages: []
+jobs:
+- name: cron
+  version: 8a2952db48b854001b3b9770b4fbe2275c88fa30
+  fingerprint: 8a2952db48b854001b3b9770b4fbe2275c88fa30
+  sha1: a18f7591b7070e3886ac6af2ff0204d7b473b637
+license:
+  version: a11dc44d2ff75b964daf257650268340e4c5ba39
+  fingerprint: a11dc44d2ff75b964daf257650268340e4c5ba39
+  sha1: 5549ad6975c333e9a68756497a4afa7dc5be0643
+commit_hash: 4385ba00
+uncommitted_changes: true
+name: cron
+version: '1'
