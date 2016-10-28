@@ -19,7 +19,7 @@ jobs:
     networks:
 
 networks:
-
+resource_pools:
 properties:
   cron:
 

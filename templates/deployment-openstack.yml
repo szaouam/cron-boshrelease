@@ -32,6 +32,6 @@ resource_pools:
   - name: small_z1
     network: cron1
     stemcell: (( grab meta.stemcell )) # can be changed ...
-    cloud_properties: #changed
+    cloud_properties:
       instance_type: n2.cw.standard-1
       disk: 10000
