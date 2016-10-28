@@ -34,3 +34,6 @@ networks:
     gateway: 10.250.2.1
     static:
       - 10.250.2.2 - 10.250.2.60
+    cloud_properties:
+      net_id: d3b8b007-0b17-42f4-9908-6274ea7b22d3
+      security_groups: [tf-bosh,default]

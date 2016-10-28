@@ -9,9 +9,9 @@ update:
   serial: false
 
 jobs:
-  - name: just_install_packages
+  - name: bosh_backup_cron
     templates:
-    - name: just_install_packages
+    - name: cron
       release: cron
     instances: 1
     persistent_disk: 0
@@ -20,4 +20,6 @@ jobs:
 
 networks:
 
-properties: {}
+properties:
+  cron:
+
