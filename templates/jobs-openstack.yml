@@ -9,7 +9,7 @@ update:
   serial: false
 
 jobs:
-  - name: bosh_backup_cron
+  - name: cron
     templates:
     - name: cron
       release: cron
