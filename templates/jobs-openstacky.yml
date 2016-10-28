@@ -18,8 +18,8 @@ jobs:
     resource_pool: small_z1
     networks:
 
-networks:
-resource_pools:
+networks: ~
+resource_pools: ~
 properties:
   cron:
 
