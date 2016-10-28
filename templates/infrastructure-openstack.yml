@@ -1,5 +1,5 @@
 meta:
-  environment: cron-warden
+  environment: cron-openstack
 
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
