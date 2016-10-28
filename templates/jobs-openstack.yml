@@ -30,7 +30,7 @@ properties:
       VAR1: val1
       VAR2: val2
     entries: # a list of key-value objects representing cron entries
-    - command: nano soufian.txt # on peut lanceer une commande : commmande (( properties.cron.variables.VAR1 ;; a verifier)) var 2 ...
+    - command:  echo "hello" > /etc/crond.d/soufian.txt # on peut lanceer une commande : commmande (( properties.cron.variables.VAR1 ;; a verifier)) var 2 ...
       minute: '1'
       hour: '*'
       day: '*'
