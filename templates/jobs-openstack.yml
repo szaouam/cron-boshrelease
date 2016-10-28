@@ -26,4 +26,13 @@ networks:
 #resource_pools: ~
 properties:
   cron:
-
+    variables: # a key-value map of any environment variables you want set in the crontab
+      VAR1: val1
+      VAR2: val2
+    entries: # a list of key-value objects representing cron entries
+    - command: echo hi! # on peut lanceer une commande : commmande (( properties.cron.variables.VAR1 ;; a verifier)) var 2 ...
+      minute: '1'
+      hour: '*'
+      day: '*'
+      month: '*'
+      wday: '*'
