@@ -14,7 +14,7 @@ jobs: ~ # merged from jobs-openstack
 
 compilation:
   workers: 2 # modified , old value : 6
-  network: dynamic # changed, old : cron1
+  network: cron1 # changed, old : cron1
   reuse_compilation_vms: true
   cloud_properties:
     instance_type: n1.cw.highcpu-2
