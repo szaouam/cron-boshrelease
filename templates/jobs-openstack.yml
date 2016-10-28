@@ -17,8 +17,12 @@ jobs:
     persistent_disk: 0
     resource_pool: small_z1
     networks:
+      - name: cron1
+        default: [dns,gateway]
+        static_ips:
+        - 10.250.2.2 - 10.250.2.60
 
-networks: 
+networks:
 #resource_pools: ~
 properties:
   cron:
