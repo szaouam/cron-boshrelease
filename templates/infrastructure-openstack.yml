@@ -2,7 +2,7 @@ meta:
   environment: cron-warden
 
   stemcell:
-    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    name: bosh-openstack-kvm-ubuntu-trusty-go_agent
     version: latest
 
 update:
@@ -29,8 +29,8 @@ networks:
 - name: cron1
   type: manual
   subnets:
-  - range: 10.244.2.0/24
+  - range: 10.250.2.0/24
     name: cron1
-    gateway: 10.244.2.1
+    gateway: 10.250.2.1
     static:
-      - 10.244.2.2-10.244.2.60
+      - 10.250.2.2 - 10.250.2.60

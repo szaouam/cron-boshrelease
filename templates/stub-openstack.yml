@@ -1,0 +1,8 @@
+---
+meta:
+
+director_uuid: de55efe0-b372-4840-90a4-888b28789fdf
+
+releases:
+  - name: cron
+    version: latest
