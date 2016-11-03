@@ -25,7 +25,7 @@ update:
 resource_pools:
   - name: small_z1
     network: my_network
-    stemcell: (( grab meta.stemcell )) # can be changed ...
+    stemcell: (( grab meta.stemcell ))
     cloud_properties:
       instance_type: n2.cw.standard-1
       disk: 10000
