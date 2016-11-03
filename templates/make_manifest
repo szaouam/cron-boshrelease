@@ -82,8 +82,8 @@ if ! [ -x "$(command -v spruce)" ]; then
 fi
 
 spruce merge --prune meta \
-  $templates/deployment-openstack.yml \
-  $templates/jobs-openstack.yml \
+  $templates/deployment-${infrastructure}.yml \
+  $templates/jobs-${infrastructure}.yml \
   $templates/infrastructure-${infrastructure}.yml \
   $tmpdir/stub-with-uuid.yml \
   $* > $tmpdir/$NAME-manifest.yml
