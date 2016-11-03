@@ -17,22 +17,23 @@ jobs:
     persistent_disk: 0
     resource_pool: small_z1
     networks:
-      - name: cron1
+      - name: my_network
         default: [dns,gateway]
         static_ips:
         - 10.250.2.55
 
 networks:
-#resource_pools: ~
 properties:
   cron:
-    variables: # a key-value map of any environment variables you want set in the crontab
-      VAR1: val1
-      VAR2: val2
+    #uncomment if you want to use arguments
+    #variables: # a key-value map of any environment variables you want set in the crontab
+     # VAR1: val1
+     # VAR2: val2
     entries: # a list of key-value objects representing cron entries
-    - command: sudo echo "hello" > /var/log/soufian.txt # on peut lanceer une commande : commmande (( properties.cron.variables.VAR1 ;; a verifier)) var 2 ...
-      minute: 1
-     hour: '*'
+    - command: sudo echo "hello" > /tmp/test_file
+      minute: '*'
+      hour: '*'
       day: '*'
       month: '*'
       wday: '*'
+      user: root

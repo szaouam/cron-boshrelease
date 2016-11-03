@@ -1,9 +1,3 @@
-# Deprecated and unuseful !!
-# will be remove
-#meta:
-#  environment: openstack
-#  stemcell: bosh-openstack-kvm-ubuntu-trusty-go_agent
-
 name: (( grab meta.environment ))
 
 director_uuid: de55efe0-b372-4840-90a4-888b28789fdf
@@ -13,8 +7,8 @@ releases: ~ # merged from stub-openstack
 jobs: ~ # merged from jobs-openstack
 
 compilation:
-  workers: 2 # modified , old value : 6
-  network: cron1 # changed, old : cron1
+  workers: 2
+  network: my_network
   reuse_compilation_vms: true
   cloud_properties:
     instance_type: n1.cw.highcpu-2
@@ -30,7 +24,7 @@ update:
 
 resource_pools:
   - name: small_z1
-    network: cron1
+    network: my_network
     stemcell: (( grab meta.stemcell )) # can be changed ...
     cloud_properties:
       instance_type: n2.cw.standard-1
