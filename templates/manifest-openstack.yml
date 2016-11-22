@@ -1,0 +1,50 @@
+director_uuid: REPLACE_WITH_DIRECTOR_ID
+jobs:
+- instances: 1
+  name: cron
+  networks:
+  - default:
+    - dns
+    - gateway
+    name: REPLACE_WITH_YOUR_NETWORK
+    static_ips:
+    - 10.250.2.61
+  persistent_disk: 0
+  vm_type: default
+  stemcell: trusty
+  azs: [z1]
+  jobs:
+  - name: cron
+    release: cron
+name: cron-openstack
+properties:
+  cron:
+    entries:
+    - command: REPLACE_WITH_YOUR_COMMAND
+      day: '*'
+      hour: '*'
+      minute: '*'
+      month: '*'
+      user: vcap
+      wday: '*'
+    - script:
+      name: touch.sh
+      contents: |
+        #!/bin/bash
+
+        /usr/bin/touch /tmp/test-script-cron  
+releases:
+- name: cron
+  version: latest
+update:
+  canaries: 1
+  canary_watch_time: 1000-30000
+  max_in_flight: 50
+  serial: false
+  update_watch_time: 1000-30000
+
+stemcells:
+ - alias: trusty
+   os: ubuntu-trusty
+   version: latest
+
