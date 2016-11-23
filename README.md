@@ -7,6 +7,16 @@ VMs.
 Additionally, it serves as a good starting point, should you want to `bosh-gen extract-job`
 into your own BOSH release, to make it easier to tie a cronjob to your specific release.
 
+### Deploying
+Modify the sample stubs to suit your deployment environment in `templates`.
+
+The next step is to to generate the manifest file that will be used for deployment. Run the `make_manifest` script  `./templates/make_manifest <openstack|warden|aws>`. 
+
+If are using an Openstack environment, the cron release can be deployed using the bosh v2 manifest (must have a cloud-config in your current bosh).
+You have to modify the manifest-openstack.yml file to suit your deployment environment.
+
+ 
+
 
 ### Colocation Instructions
 

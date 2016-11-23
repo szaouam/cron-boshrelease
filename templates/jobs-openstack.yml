@@ -35,5 +35,11 @@ properties:
       hour: '*'
       day: '*'
       month: '*'
+      user: vcap
       wday: '*'
-      user: root
+    - script:
+      name: touch.sh
+      contents: |
+        #!/bin/bash
+
+        /usr/bin/touch /tmp/test-script-cron
