@@ -11,8 +11,8 @@ fail() {
 	echo >&2 $*
 }
 
-if [[ "$infrastructure" != "aws-ec2" && "$infrastructure" != "warden" ]] ; then
-  fail "usage: ./make_manifest <aws-ec2|warden>"
+if [[ "$infrastructure" != "aws-ec2" && "$infrastructure" != "warden" && "$infrastructure" != "openstack" ]] ; then
+  fail "usage: ./make_manifest <aws-ec2|warden|openstack>"
   exit 1
 fi
 
@@ -20,6 +20,7 @@ case "${infrastructure}/${STEMCELL_OS}" in
   (warden/*)       STEMCELL_URL="https://bosh.io/d/stemcells/bosh-warden-boshlite-ubuntu-trusty-go_agent" ;;
   (aws-ec2/ubuntu) STEMCELL_URL="https://bosh.io/d/stemcells/bosh-aws-xen-ubuntu-trusty-go_agent" ;;
   (aws-ec2/centos) STEMCELL_URL="https://bosh.io/d/stemcells/bosh-aws-xen-centos-7-go_agent" ;;
+  (openstack/ubuntu) STEMCELL_URL="https://bosh.io/d/stemcells/bosh-openstack-kvm-ubuntu-trusty-go_agent" ;;
   (*)
     fail "Invalid infrastructure or OS specified."
     exit 1
@@ -43,6 +44,14 @@ if [[ $infrastructure = "aws-ec2" && ${DIRECTOR_CPI} != "aws" ]]; then
   fail "Not targeting an AWS BOSH. Please make sure you have run 'bosh target' and are targeting an AWS BOSH before running this script."
   exit 1
 fi
+
+# to be reviewed !!
+if [[ $DIRECTOR_NAME = "openstack" && ${infrastructure} != "openstack" ]]; then
+  fail "Not targeting bosh-lite with openstack CPI. Please make sure you have run 'bosh target' and are targeting a BOSH lite before running this script."
+  exit 1
+fi
+
+# -----------------
 
 function latest_uploaded_stemcell {
   echo $(bosh stemcells | grep bosh | grep $STEMCELL_OS | awk -F'|' '{ print $2, $3 }' | sort -nr -k2 | head -n1 | awk '{ print $1 }')
@@ -73,8 +82,8 @@ if ! [ -x "$(command -v spruce)" ]; then
 fi
 
 spruce merge --prune meta \
-  $templates/deployment.yml \
-  $templates/jobs.yml \
+  $templates/deployment-${infrastructure}.yml \
+  $templates/jobs-${infrastructure}.yml \
   $templates/infrastructure-${infrastructure}.yml \
   $tmpdir/stub-with-uuid.yml \
   $* > $tmpdir/$NAME-manifest.yml
