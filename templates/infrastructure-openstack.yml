@@ -1,0 +1,39 @@
+meta:
+  environment: cron-openstack
+
+  stemcell:
+    name: bosh-openstack-kvm-ubuntu-trusty-go_agent
+    version: latest
+
+update:
+  canaries: 1
+  max_in_flight: 50
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+
+jobs:
+  - name: cron
+    networks:
+      - name: my_network
+
+compilation:
+  cloud_properties:
+    name: random
+
+resource_pools:
+  - name: small_z1
+    cloud_properties:
+      name: random
+
+networks:
+- name: cron1
+  type: manual
+  subnets:
+  - range: 10.250.2.0/24
+    name: cron1
+    gateway: 10.250.2.1
+    static:
+      - 10.250.2.2 - 10.250.2.60
+    cloud_properties:
+      net_id: d3b8b007-0b17-42f4-9908-6274ea7b22d3
+      security_groups: [tf-bosh,default]
