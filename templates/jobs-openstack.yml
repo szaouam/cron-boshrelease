@@ -1,0 +1,45 @@
+meta:
+  environment: ~
+
+update:
+  canaries: 1
+  max_in_flight: 50
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+  serial: false
+
+jobs:
+  - name: cron
+    templates:
+    - name: cron
+      release: cron
+    instances: 1
+    persistent_disk: 0
+    resource_pool: small_z1
+    networks:
+      - name: my_network
+        default: [dns,gateway]
+        static_ips:
+        - 10.250.2.55
+
+networks:
+properties:
+  cron:
+    #uncomment if you want to use arguments
+    #variables: # a key-value map of any environment variables you want set in the crontab
+     # VAR1: val1
+     # VAR2: val2
+    entries: # a list of key-value objects representing cron entries
+    - command: sudo echo "hello" > /tmp/test_file
+      minute: '*'
+      hour: '*'
+      day: '*'
+      month: '*'
+      user: vcap
+      wday: '*'
+    - script:
+      name: touch.sh
+      contents: |
+        #!/bin/bash
+
+        /usr/bin/touch /tmp/test-script-cron
